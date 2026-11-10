@@ -1,1 +1,10 @@
+// Teste 1: Valida se o Status Code é 401 para credencial inválida
+pm.test("Status code é 401 Unauthorized", function () {
+    pm.response.to.have.status(401);
+});
 
+// Teste 2: Valida a mensagem exata do JSON
+pm.test("Validar mensagem de erro no corpo da resposta", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.eql("Email e/ou senha inválidos");
+});
