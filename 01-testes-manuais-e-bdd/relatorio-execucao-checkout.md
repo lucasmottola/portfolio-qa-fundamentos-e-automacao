@@ -1,5 +1,5 @@
 
-# Relatório de Execução de Teste — Fluxo de Carrinho e Checkout
+# Relatório de Execução de Teste - Fluxo de Carrinho e Checkout
 
 ## Informações Gerais
 * **Projeto:** SauceDemo E-Commerce
