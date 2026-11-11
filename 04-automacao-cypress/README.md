@@ -37,3 +37,14 @@ a execução.
 
 O SauceDemo é um site de demonstração. As credenciais usadas são as públicas
 do exercício; não use senhas pessoais.
+
+
+## Projeto 3.2 — Checkout de dois produtos
+
+- **Arquivo:** `cypress/e2e/checkout.cy.js`
+- **Comando:** `npx cypress run --spec "cypress/e2e/checkout.cy.js"`
+- **Ambiente:** Fedora Linux, Node.js 24.18.1, Cypress 16.3.0, Electron headless.
+- **Esperado:** concluir o checkout dos dois produtos e exibir a mensagem aprovada.
+- **Obtido:** 1 teste aprovado, 0 falhas. A mensagem exibida foi `Thank you for your order!`.
+- **Evidência:** saída do Cypress no terminal. Nessa execução, não foram gerados screenshot nem vídeo.
+- **Data:** 11/11/2026
