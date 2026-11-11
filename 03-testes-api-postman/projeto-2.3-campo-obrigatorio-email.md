@@ -41,3 +41,46 @@ o contrato atual da API.
 ## Evidência
 2.3 - email é obrigatório.png
 
+# Projeto 2.3 - Cadastro sem campo obrigatório
+
+## Objetivo
+
+Verificar se a API rejeita o cadastro quando a propriedade `email` é omitida
+e validar a resposta de erro com testes no Postman e JSON Schema.
+
+## Ambiente e requisição
+
+- **API:** ServeRest
+- **Ambiente:** ServeRest - DEV
+- **Método:** POST
+- **Endpoint:** `{{baseUrl}}/usuarios`
+- **Autorização:** No Auth
+- **Corpo:** JSON de teste sem a propriedade `email`.
+- **Dados:** fictícios.
+
+## Caso de teste
+
+| ID | Cenário | Resultado esperado | Resultado obtido | Status |
+|---|---|---|---|---|
+| TC-API-2.3-001 | Enviar cadastro sem `email` | HTTP 400 e indicação de que `email` é obrigatório | HTTP 400; `{"email":"email é obrigatório"}` | PASSOU |
+
+## Testes executados no Postman
+
+1. `Status code é 400 Bad Request` — **PASSOU**
+2. `Resposta informa que email é obrigatório` — **PASSOU**
+3. `Resposta de erro segue o schema de email obrigatório` — **PASSOU**
+
+## Schema usado
+
+```javascript
+var schemaErroEmail = {
+  type: "object",
+  required: ["email"],
+  properties: {
+    email: {
+      type: "string"
+    }
+  }
+};
+
+
