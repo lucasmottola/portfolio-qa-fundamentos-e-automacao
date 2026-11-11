@@ -1,0 +1,378 @@
+{
+  "info": {
+    "_postman_id": "cb047b1f-620e-42e6-8bdf-4ba62908a3e6",
+    "name": "Serverest-API-Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27529624",
+    "_collection_link": "https://go.postman.co/collection/27529624-cb047b1f-620e-42e6-8bdf-4ba62908a3e6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "Login — credenciais inválidas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 401 para credenciais inválidas\", function () {\n  pm.response.to.have.status(401);\n});\n\npm.test(\"Mensagem de erro está correta\", function () {\n  var jsonData = pm.response.json();\n  pm.expect(jsonData.message).to.eql(\"Email e/ou senha inválidos\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"fulano@qa.com\",\n  \"password\": \"teste\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login — credenciais válidas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 200 OK\", function () {\n  pm.response.to.have.status(200);\n});\n\npm.test(\"Login confirma sucesso e retorna token\", function () {\n  var jsonData = pm.response.json();\n\n  pm.expect(jsonData.message).to.eql(\"Login realizado com sucesso\");\n  pm.expect(jsonData.authorization).to.be.a(\"string\");\n  pm.expect(jsonData.authorization.length).to.be.above(0);\n\n  var token = jsonData.authorization.replace(/^Bearer\\s+/i, \"\");\n    pm.environment.set(\"token\", token);\n\n\n  pm.test(\"Token salvo no ambiente\", function () {\n  var tokenSalvo = pm.environment.get(\"token\");\n  pm.expect(tokenSalvo).to.be.a(\"string\");\n  pm.expect(tokenSalvo).to.not.be.empty;\n});\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"qa.lucas.202611101545@example.com\",\n  \"password\": \"SenhaQA2026!\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Validação e Schema",
+      "item": [
+        {
+          "name": "Cadastro — usuário QA temporário",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 201 Created\", function () {\n  pm.response.to.have.status(201);\n});\n\npm.test(\"Resposta confirma o cadastro e retorna um ID\", function () {\n  var jsonData = pm.response.json();\n\n  pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\n  pm.expect(jsonData._id).to.be.a(\"string\");\n  pm.expect(jsonData._id).to.not.be.empty;\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Usuario QA Portfolio\",\n  \"email\": \"qa.lucas.202611101545@example.com\",\n  \"password\": \"SenhaQA2026!\",\n  \"administrador\": \"true\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastro - sem campo email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {\n  pm.response.to.have.status(400);\n});\n\npm.test(\"Resposta informa que email é obrigatório\", function () {\n  var jsonData = pm.response.json();\n\n  pm.expect(jsonData).to.have.property(\"email\");\n  pm.expect(jsonData.email).to.be.a(\"string\");\n  pm.expect(jsonData.email).to.eql(\"email é obrigatório\");\n});\n\nvar schemaErroEmail = {\n  type: \"object\",\n  required: [\"email\"],\n  properties: {\n    email: {\n      type: \"string\"\n    }\n  }\n};\n\npm.test(\"Resposta de erro segue o schema de email obrigatório\", function () {\n  pm.response.to.have.jsonSchema(schemaErroEmail);\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"QA Projeto 2.3\",\n  \"password\": \"SenhaTeste123\",\n  \"administrador\": \"false\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastro - password vazio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request\", function () {\n  pm.response.to.have.status(400);\n});\n\npm.test(\"Resposta informa que a senha não pode ficar em branco\", function () {\n  var jsonData = pm.response.json();\n\n  pm.expect(jsonData).to.have.property(\"password\");\n  pm.expect(jsonData.password).to.eql(\"password não pode ficar em branco\");\n});\n\nvar schemaErroSenha = {\n  type: \"object\",\n  required: [\"password\"],\n  properties: {\n    password: {\n      type: \"string\"\n    }\n  }\n};\n\npm.test(\"Resposta de erro segue o schema de password\", function () {\n  pm.response.to.have.jsonSchema(schemaErroSenha);\n});\n\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"QA Projeto 2.4\",\n  \"email\": \"qa.projeto24.20261111.a1@example.com\",\n  \"password\": \"\",\n  \"administrador\": \"false\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Crud - Produtos",
+      "item": [
+        {
+          "name": "Criar produto QA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 201 Created\", function () {\n  pm.response.to.have.status(201);\n});\n\npm.test(\"Resposta retorna o ID do produto criado\", function () {\n  var jsonData = pm.response.json();\n\n  pm.expect(jsonData._id).to.be.a(\"string\");\n  pm.expect(jsonData._id).to.not.be.empty;\n\n  pm.environment.set(\"produtoId\", jsonData._id);\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Produto QA Portfolio 10112026-01\",\n  \"preco\": 100,\n  \"descricao\": \"Produto de teste criado para o portfólio QA\",\n  \"quantidade\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/produtos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar produtos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 200 OK\", function () {\n  pm.response.to.have.status(200);\n});\n\npm.test(\"Resposta contém a lista e a quantidade de produtos\", function () {\n  var jsonData = pm.response.json();\n\n  pm.expect(jsonData.produtos).to.be.an(\"array\");\n  pm.expect(jsonData.quantidade).to.be.a(\"number\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar produto QA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 200 OK\", function () {\n  pm.response.to.have.status(200);\n});\n\npm.test(\"Resposta confirma a atualização\", function () {\n  var jsonData = pm.response.json();\n  pm.expect(jsonData.message).to.eql(\"Registro alterado com sucesso\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Produto QA Portfolio 20261110-01 Atualizado\",\n  \"preco\": 120,\n  \"descricao\": \"Produto atualizado para validar a operação PUT\",\n  \"quantidade\": 15\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos",
+                "{{produtoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir produto QA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 200 OK\", function () {\n  pm.response.to.have.status(200);\n});\n\npm.test(\"Resposta confirma a exclusão\", function () {\n  var jsonData = pm.response.json();\n  pm.expect(jsonData.message).to.eql(\"Registro excluído com sucesso\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos",
+                "{{produtoId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "value": ""
+    }
+  ]
+}
