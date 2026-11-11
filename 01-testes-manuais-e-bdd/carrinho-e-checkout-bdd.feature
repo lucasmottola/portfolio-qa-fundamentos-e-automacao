@@ -19,7 +19,7 @@ Funcionalidade: Fluxo de Carrinho de Compras e Checkout no E-Commerce
     E clicar no botão "Continue"
     E confirmar o resumo do pedido na página de visão geral
     E clicar no botão "Finish"
-    Então o sistema deve exibir a confirmação de pedido com a mensagem "THANK YOU FOR YOUR ORDER"
+    Então o sistema deve exibir a confirmação de pedido com a mensagem "Thank you for your order!"
     E a rota atual deve ser "/checkout-complete.html"
 
   @regra_negocio @validacao_campos
