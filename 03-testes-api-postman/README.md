@@ -50,3 +50,24 @@ Os scripts da coleção conferem status e conteúdo das respostas. Nos casos de 
 - Login inválido: `401 Unauthorized`, 2/2 testes aprovados.
 - CRUD de produtos: criação `201 Created`; listagem, atualização e exclusão `200 OK`.
 - Validações de cadastro e schema: resultados esperados confirmados no Postman.
+
+
+## Evidências de execução
+
+### Login
+
+- [Login válido - 200 OK, 3/3 testes aprovados](evidencias/login-valido.png)
+- [Login inválido - 401 Unauthorized, 2/2 testes aprovados](evidencias/login-invalido.png)
+
+### Cadastro e validações
+
+- [Cadastro de usuário QA temporário](evidencias/cadastro-usuario-temporario.png)
+- [Cadastro sem email - 400 Bad Request, 3/3 testes aprovados](evidencias/cadastro-email-obrigatorio.png)
+- [Cadastro com senha em branco - 400 Bad Request, 3/3 testes aprovados](evidencias/cadastro-password-vazio.png)
+
+### CRUD de produtos
+
+- [Criar produto QA - 201 Created, 2/2 testes aprovados](evidencias/crud-criar-produto.png)
+- [Listar produtos - 200 OK, 2/2 testes aprovados](evidencias/crud-listar-produtos.png)
+- [Atualizar produto QA - 200 OK, 2/2 testes aprovados](evidencias/crud-atualizar-produto.png)
+- [Excluir produto QA - 200 OK, 2/2 testes aprovados](evidencias/crud-excluir-produto.png)
