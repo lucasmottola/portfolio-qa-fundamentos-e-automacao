@@ -39,12 +39,14 @@ O SauceDemo é um site de demonstração. As credenciais usadas são as pública
 do exercício; não use senhas pessoais.
 
 
-## Projeto 3.2 — Checkout de dois produtos
+## Projeto 3.2 - Checkout de dois produtos
 
 - **Arquivo:** `cypress/e2e/checkout.cy.js`
-- **Comando:** `npx cypress run --spec "cypress/e2e/checkout.cy.js"`
+- **Comando:** `npx cypress run`, executado na pasta `04-automacao-cypress`.
+- **Última execução:** 13/11/2026.
 - **Ambiente:** Fedora Linux, Node.js 24.18.1, Cypress 16.3.0, Electron headless.
-- **Esperado:** concluir o checkout dos dois produtos e exibir a mensagem aprovada.
-- **Obtido:** 1 teste aprovado, 0 falhas. A mensagem exibida foi `Thank you for your order!`.
-- **Evidência:** saída do Cypress no terminal. Nessa execução, não foram gerados screenshot nem vídeo.
-- **Data:** 11/11/2026
+- **Resultado deste cenário:** 1 teste aprovado, 0 falhas.
+- **Resultado da suíte completa:** 2 arquivos de teste executados, 2 testes aprovados, 0 falhas.
+- **Confirmação do checkout:** `Thank you for your order!`
+- **Aviso:** o Cypress informou que Electron está depreciado como navegador de teste. O aviso não impediu a execução.
+- **Evidência:** saída do Cypress no terminal. Não foram gerados screenshots nem vídeo nesta execução.
