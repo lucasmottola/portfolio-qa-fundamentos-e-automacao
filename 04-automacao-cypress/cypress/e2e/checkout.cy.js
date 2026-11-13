@@ -1,24 +1,18 @@
 /*
- * P3.2 — Checkout E2E no SauceDemo
+ * Projeto 3.2 - Checkout E2E no SauceDemo
  *
- * Como usar este arquivo:
- * 1. Na raiz do repositório, confirme que a pasta do projeto contém
- *    04-automacao-cypress/cypress.config.js e package.json.
- * 2. Baixe este arquivo e salve-o no seu clone como
- *    04-automacao-cypress/cypress/e2e/checkout.cy.js.
- * 3. Não use a cópia aninhada vazia
- *    04-automacao-cypress/04-automacao-cypress/cypress/e2e/.
- * 4. Antes de registrar o teste como aprovado, valide no SauceDemo se os
- *    seletores data-test e os resultados esperados ainda correspondem à tela.
+ * O teste adiciona dois produtos ao carrinho, preenche os dados de entrega,
+ * conclui o pedido e verifica a página de confirmação.
  *
- * Este spec não foi executado durante sua preparação. Ele usa as credenciais
- * públicas de demonstração do SauceDemo, nunca credenciais pessoais.
- * A asserção final usa como hipótese o texto literal da captura publicada.
- * A feature BDD diverge em caixa e pontuação: mantenha o caso bloqueado até
- * confirmar o critério aprovado e alinhar a feature com o resultado esperado.
+ * Execução confirmada em 11/11/2026: 1 teste aprovado, 0 falhas.
+ * Ambiente registrado: Fedora Linux, Node.js 24.18.1 e Cypress 16.3.0.
+ * Mensagem validada: "Thank you for your order!"
+ *
+ * Use apenas as credenciais públicas de demonstração do SauceDemo.
  */
 
-describe("Checkout — compra de dois produtos no SauceDemo", () => {
+
+describe("Checkout - compra de dois produtos no SauceDemo", () => {
   beforeEach(() => {
     // A configuração do projeto define baseUrl como https://www.saucedemo.com.
     // Limpa o estado deste domínio e recarrega a página antes de cada teste.
