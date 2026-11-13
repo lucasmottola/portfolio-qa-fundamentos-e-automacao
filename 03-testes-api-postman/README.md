@@ -10,7 +10,8 @@ Este módulo reúne testes de API REST feitos com Postman na API pública ServeR
 - `Serverest-API-Tests.postman_collection.json` - coleção Postman importável, Collection v2.1, com nove requisições e seus scripts de teste.
 - `projeto-2.3-campo-obrigatorio-email.md` - caso de teste para cadastro sem o campo email.
 - `projeto-2.4-senha-em-branco.md` - caso de teste para cadastro com senha em branco.
-- `evidencias/` - capturas dos resultados dos testes, sem credenciais nem tokens.
+- `evidencias/` - capturas dos testes com dados descartáveis; o ambiente local e os tokens não são publicados.
+
 
 ## Configuração
 
