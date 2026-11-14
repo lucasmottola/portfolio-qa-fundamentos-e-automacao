@@ -11,7 +11,7 @@
       "name": "Login",
       "item": [
         {
-          "name": "Login — credenciais inválidas",
+          "name": "Login - credenciais inválidas",
           "event": [
             {
               "listen": "test",
@@ -48,7 +48,7 @@
           "response": []
         },
         {
-          "name": "Login — credenciais válidas",
+          "name": "Login - credenciais válidas",
           "event": [
             {
               "listen": "test",
@@ -93,7 +93,7 @@
       "name": "Validação e Schema",
       "item": [
         {
-          "name": "Cadastro — usuário QA temporário",
+          "name": "Cadastro - usuário QA temporário",
           "event": [
             {
               "listen": "test",
@@ -110,7 +110,81 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Usuario QA Portfolio\",\n  \"email\": \"qa.lucas@example.com\",\n  \"password\": \"SenhaQA2026!\",\n  \"administrador\": \"true\"\n}",
+              "raw": "{\n  \"nome\": \"Usuario QA Portfolio\",\n  \"email\": \"qa.projeto@example.com\",\n  \"password\": \"SenhaQA2026!\",\n  \"administrador\": \"true\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Preparação - usuário para CT-CAD-02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 201 Created\", function () {\n  pm.response.to.have.status(201);\n});\n\npm.test(\"Resposta confirma o cadastro e retorna um ID\", function () {\n  var jsonData = pm.response.json();\n\n  pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\n  pm.expect(jsonData._id).to.be.a(\"string\");\n  pm.expect(jsonData._id).to.not.be.empty;\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Usuario QA Portfolio\",\n  \"email\": \"qa.2026@example.com\",\n  \"password\": \"SenhaQA2026!\",\n  \"administrador\": \"true\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CT-CAD-02 - email já cadastrado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code é 400 Bad Request para e-mail duplicado\", function () {\n  pm.response.to.have.status(400);\n});\n\npm.test(\"Resposta informa que o e-mail já está cadastrado\", function () {\n  var jsonData = pm.response.json();\n  pm.expect(jsonData.message).to.eql(\"Este email já está sendo usado\");\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Usuario QA Portfolio\",\n  \"email\": \"qa.2026@example.com\",\n  \"password\": \"SenhaQA2026!\",\n  \"administrador\": \"true\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

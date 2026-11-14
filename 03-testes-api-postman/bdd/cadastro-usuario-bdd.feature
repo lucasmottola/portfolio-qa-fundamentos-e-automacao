@@ -1,27 +1,25 @@
 # language: pt
-@cadastro @saas @usuarios
-Funcionalidade: Cadastro de Nova Conta de Usuário
-  Como um novo usuário de uma aplicação SaaS
-  Quero realizar o meu cadastro na plataforma
-  Para obter acesso aos recursos do sistema com segurança
+@serverest @api @usuarios
+Funcionalidade: Cadastro de usuários na API ServeRest
+  Como consumidor da API ServeRest
+  Quero enviar requisições para cadastrar usuários
+  Para validar as respostas do endpoint de cadastro
 
   Contexto:
-    Dado que o visitante esteja na página de registro "/cadastrarusuarios"
+    Dado que a API ServeRest esteja disponível
+    E que as requisições enviem dados no formato JSON
 
-  @caminho_feliz @sucesso
-  Cenário: Cadastro de usuário com dados válidos e senha forte
-    Quando o visitante preencher o nome "Lucas Mottola", e-mail "lucas.qa2@teste.com" e senha "SenhaSegura123!"
-    E marcar a opção de perfil "Administrador"
-    E clicar no botão "Cadastrar"
-    Então o sistema deve realizar o cadastro com sucesso
-    E exibir a mensagem "Cadastro realizado com sucesso"
-    E redirecionar o usuário para a página de login "/login"
-
+  @caminho_feliz
+  Cenário: CT-CAD-01 - Cadastrar usuário com dados válidos
+    Dado que tenho um e-mail de teste válido ainda não cadastrado
+    Quando envio uma requisição POST para "/usuarios" com dados válidos de cadastro
+    Então a resposta HTTP deve ser 201 Created
+    E a resposta JSON deve conter a mensagem "Cadastro realizado com sucesso"
+    E a resposta JSON deve conter um campo "_id" preenchido
 
   @regra_negocio @email_duplicado
-  Cenário: Tentativa de cadastro com e-mail já existente no banco de dados
-    Dado que o e-mail "usuario.existente@teste.com" já esteja cadastrado no sistema
-    Quando o visitante tentar cadastrar uma nova conta utilizando o e-mail "usuario.existente@teste.com"
-    E clicar no botão "Cadastrar"
-    Então o sistema deve recusar o cadastro
-    E exibir a mensagem de erro "Este email já está sendo usado"
+  Cenário: CT-CAD-02 - Recusar cadastro com e-mail já cadastrado
+    Dado que um usuário de teste foi cadastrado com sucesso pela API
+    Quando envio outra requisição POST para "/usuarios" com o mesmo corpo e e-mail
+    Então a resposta HTTP deve ser 400 Bad Request
+    E a resposta JSON deve conter a mensagem "Este email já está sendo usado"
