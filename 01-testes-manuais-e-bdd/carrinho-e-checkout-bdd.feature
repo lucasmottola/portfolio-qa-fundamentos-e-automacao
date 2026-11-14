@@ -10,7 +10,7 @@ Funcionalidade: Fluxo de Carrinho de Compras e Checkout no E-Commerce
     E esteja na página inicial do catálogo de produtos "/inventory.html"
 
   @caminho_feliz @sucesso
-  Cenário: Realizar compra de múltiplos produtos com sucesso
+  Cenário: CT-001 - Realizar compra de múltiplos produtos com sucesso
     Quando o usuário adicionar o produto "Sauce Labs Backpack" ao carrinho
     E adicionar o produto "Sauce Labs Bike Light" ao carrinho
     E acessar a página do carrinho de compras
@@ -22,16 +22,26 @@ Funcionalidade: Fluxo de Carrinho de Compras e Checkout no E-Commerce
     Então o sistema deve exibir a confirmação de pedido com a mensagem "Thank you for your order!"
     E a rota atual deve ser "/checkout-complete.html"
 
-  @regra_negocio @validacao_campos
-  Esquema do Cenário: Validação de campos obrigatórios no formulário de checkout
+  @regra_negocio @validacao_campos 
+  Cenário: CT-002 - Validar que First Name é obrigatório
     Dado que o usuário adicionou um produto ao carrinho e acessou a tela de checkout
-    Quando o usuário preencher o primeiro nome como "<primeiro_nome>", sobrenome como "<sobrenome>" e CEP como "<cep>"
+    Quando o usuário preencher o primeiro nome como "" sobrenome como "Mottola" e CEP como "90000-000"
     E clicar no botão "Continue"
-    Então o sistema deve exibir a mensagem de erro "<mensagem_erro>"
+    Então o sistema deve exibir a mensagem de erro "Error: First Name is required"
     E o usuário deve permanecer na tela de checkout "/checkout-step-one.html"
 
-    Exemplos:
-      | primeiro_nome | sobrenome | cep       | mensagem_erro                  |
-      |               | Mottola   | 90000-000 | Error: First Name is required  |
-      | Lucas         |           | 90000-000 | Error: Last Name is required   |
-      | Lucas         | Mottola   |           | Error: Postal Code is required |
+  @regra_negocio @validacao_campos 
+  Cenário: CT-003 - Validar que Last Name é obrigatório
+    Dado que o usuário adicionou um produto ao carrinho e acessou a tela de checkout
+    Quando o usuário preencher o primeiro nome como "Lucas" sobrenome como "" e CEP como "90000-000"
+    E clicar no botão "Continue"
+    Então o sistema deve exibir a mensagem de erro "Error: Last Name is required"
+    E o usuário deve permanecer na tela de checkout "/checkout-step-one.html"
+
+  @regra_negocio @validacao_campos 
+  Cenário: CT-004 - Validar que Postal Code é obrigatório
+    Dado que o usuário adicionou um produto ao carrinho e acessou a tela de checkout
+    Quando o usuário preencher o primeiro nome como "Lucas" sobrenome como "Mottola" e CEP como ""
+    E clicar no botão "Continue"
+    Então o sistema deve exibir a mensagem de erro "Error: Postal Code is required"
+    E o usuário deve permanecer na tela de checkout "/checkout-step-one.html"
