@@ -14,5 +14,9 @@ describe("Login — usuário bloqueado no SauceDemo", () => {
         "contain.text",
         "Epic sadface: Sorry, this user has been locked out."
       );
+
+    cy.location("pathname").should("eq", "/");
+    cy.get('[data-test="username"]').should("be.visible");
+    cy.get('[data-test="password"]').should("be.visible");
   });
 });

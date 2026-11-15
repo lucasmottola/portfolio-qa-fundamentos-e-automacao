@@ -69,6 +69,7 @@ A requisição de preparação do CT-CAD-02 cria um usuário descartável na API
 
 - [Cadastro de usuário QA temporário - 201 Created](evidencias/cadastro-usuario-temporario.png)
 - [Cadastro sem e-mail - 400 Bad Request, 3/3 testes aprovados](evidencias/cadastro-email-obrigatorio.png)
+- [Projeto 2.3 - detalhes do caso, schema e resultado](projeto-2.3-campo-obrigatorio-email.md)
 - [Cadastro com senha em branco - 400 Bad Request, 3/3 testes aprovados](evidencias/cadastro-password-vazio.png)
 - [CT-CAD-02 - resposta da API para e-mail duplicado](evidencias/cadastro-email-duplicado-resposta.png)
 - [CT-CAD-02 - 2/2 testes Postman aprovados](evidencias/cadastro-email-duplicado-testes.png)

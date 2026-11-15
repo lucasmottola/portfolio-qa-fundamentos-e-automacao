@@ -4,9 +4,7 @@
  * O teste adiciona dois produtos ao carrinho, preenche os dados de entrega,
  * conclui o pedido e verifica a página de confirmação.
  *
- * Execução confirmada em 11/11/2026: 1 teste aprovado, 0 falhas.
- * Ambiente registrado: Fedora Linux, Node.js 24.18.1 e Cypress 16.3.0.
- * Mensagem validada: "Thank you for your order!"
+ * Os detalhes da última execução estão registrados no README deste módulo.
  *
  * Use apenas as credenciais públicas de demonstração do SauceDemo.
  */
